@@ -1,0 +1,8 @@
+install supertab #用tab进行代码补全:
+--Download package of supertab.vmb in http://www.vim.org/scripts/script.php?script_id=1643
+--安装方法：
+$ vim supertab.vmb
+:source %
+
+$ echo 'let g:SuperTabDefaultCompletionType="context"' >>~/.vimrc
+--完成！
