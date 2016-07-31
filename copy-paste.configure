@@ -1,1 +1,1 @@
-set mouse-=a # Make copy/paste 复制/粘贴 working normally in vim:
+set mouse-=a # Make copy/paste working normally in vim
