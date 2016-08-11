@@ -4,4 +4,4 @@ def test(a):
 
 
 def test2():
-    print "test 2"
+    print "blank"
