@@ -1,3 +1,3 @@
 def test(a):
-    print "hello"
+    print "hallo"
     print a
