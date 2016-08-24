@@ -4,4 +4,4 @@ def test(a):
 
 
 def test2():
-    print "blank"
+    print "blank-f1"
