@@ -1,0 +1,23 @@
+flake8，是pyflakes和pep8的结合。
+错误提示：在保存的时候提示格式和语法错误信息。
+
+下载：http://www.vim.org/scripts/script.php?script_id=4440 
+解压到：~/.vim/
+配置cat >>.vimrc
+"Auto-check file for errors on write: 
+let g:PyFlakeOnWrite = 1 
+"List of checkers used: 
+let g:PyFlakeCheckers = 'pep8,mccabe,pyflakes' 
+"Default maximum complexity for mccabe: 
+let g:PyFlakeDefaultComplexity=10 
+"List of disabled pep8 warnings and errors: 
+let g:PyFlakeDisabledMessages = 'E501' 
+"Default height of quickfix window: 
+let g:PyFlakeCWindow = 6 
+"Whether to place signs or not: 
+let g:PyFlakeSigns = 1 
+"Maximum line length for PyFlakeAuto command 
+let g:PyFlakeMaxLineLength = 100 
+"Visual-mode key command for PyFlakeAuto 
+let g:PyFlakeRangeCommand = 'Q' 
+

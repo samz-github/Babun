@@ -1,0 +1,8 @@
+1.crontab -e
+Error:
+no crontab for samz - using an empty one
+/bin/sh: /bin/vi: cannot execute binary file: Exec format error
+crontab: "/bin/vi" exited with status 126
+Solution:
+export EDITOR=vim
+
