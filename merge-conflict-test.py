@@ -5,3 +5,4 @@ def test(a):
 
 def test2():
     print "blank"
+    print 'f1'
