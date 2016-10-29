@@ -1,0 +1,49 @@
+--aircrack base
+总结：Wifi或AP距离无线网卡越远，接受到的数据越小，获取用于密码的握手数据越慢。
+1. 使用Aircrack-ng 破解WPA-PSK加密无线网络
+	1）更新airodump-ng的OUI库
+		# airodump-ng-oui-update 
+		回车后，就能看到如下图23所示的开始下载的提示，稍等一会儿，这个时间会比较长，恩，建议预先升级，不要临阵磨枪。
+
+	2) 载入并激活无线网卡至monitor即监听模式。
+		# ifconfig  wlan0  up 
+		# airmon-ng  start  wlan0  
+		我们可以看到无线网卡的芯片及驱动类型，在Chipset芯片类型上标明是Ralink 2573芯片，默认驱动为rt73usb，显示为“monitor mode enabled on mon0”，即已启动监听模式，监听模式下适配器名称变更为wlan0mon。
+
+	3) 获取当前无线网络概况，包括AP的SSID、MAC地址、工作频道、无线客户端MAC及数量等。
+		# airodump-ng wlan0mon
+
+	4)记录上一步骤产生的数据，并停止上一步骤的命令，开始有针对性探测特定频道的无线网络，抓取无线数据包.
+		# airodump-ng -c 6  –w longas wlan0mon
+			参数解释：
+			-c 这里我们设置目标AP的工作频道，通过观察，我们要进行攻击测试的无线路由器工作频道为6；
+			-w 后跟要保存的文件名，这里w就是“write写”的意思，所以输入自己希望保持的文件名，这里我就写为longas。那么，小黑们一定要注意的是：这里我们虽然设置保存的文件名是longas，但是生成的文件却不是longas.cap，而是longas-01.cap。
+	
+	5) 进行Deauth攻击加速破解过程
+		Q: 什么是Deauth
+		A: aireplay-ng 发送一种称之为“Deauth”的数据包来将已经连接至无线路由器的合法无线客户端强制断开，此时，客户端就会自动重新连接无线路由器，黑客们也就有机会捕获到包含WPA-PSK握手验证的完整数据包了。
+		# aireplay-ng --deauth 1 –a AP的mac -c 客户端的mac wlan0mon
+			参数解释：
+			-0 采用deauth攻击模式，后面跟上攻击次数，这里我设置为1，大家可以根据实际情况设置为10不等；
+			-a 后跟AP的MAC地址；
+			-c 后跟客户端的MAC地址；
+			确认成功：
+			此时回到airodump-ng的界面查看，在下图27中我们可以看到在右上角出现了“WPA handshake”的提示，这表示获得到了包含WPA-PSK密码的握手数据报文，至于后面是目标AP的MAC，这里的AP指的就是要破解的无线路由器。
+
+
+	6) 开始破解WPA-PSK
+		方法一：暴力破解法
+			操作方法：利用密码生成器工具crunch产生制定密码组合，比如数字混合大小写字母。
+			# crunch 8 12 abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 | aircrack-ng –bssid BSSID -w- testfile_01.cap
+		
+		方法二：用一部包含姓名、日期和其他常用安全短语的“字典”与密码匹配。
+	        	操作方法：自己用crunch工具构造，或者在网上搜索下载字典文件wordlist.dic, 然后跑命令破解。
+		#  aircrack-ng -w wordlist.dic -b 00:11:22:33:44:55 longas-01.cap
+			参数解释：
+			-w	The name of the dictionary file
+			-b	The MAC address of the access point
+			longas-01.cap	The name of the file that contains the authentication handshake
+
+
+	7）术语
+		Beacon，信标。一般无线网卡都是所谓的被动式扫描(passive scanning)，这时路由器的无线网络就必须主动扫描以发现无线网卡客户，这就叫信标Beacon。
