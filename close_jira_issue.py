@@ -15,5 +15,5 @@ for i in issues:
     issue = jira_client.issue(i)
     # Add a comment to the issue.
     jira_client.add_comment(issue, 'Safe, it can be closed.')
-    # Resolve the issue and assign it to 'samz' in one step
-    jira_client.transition_issue(issue, '2', assignee={'name': 'samz'}, resolution={'name': 'Done'})
+    # Resolve the issue and assign it to 'xxx' in one step
+    jira_client.transition_issue(issue, '2', assignee={'name': username}, resolution={'name': 'Done'})
