@@ -1,8 +1,8 @@
-
+﻿
  
 参考来源：https://python-pytube.readthedocs.io/en/latest/user/quickstart.html
 
-
+0. 首先能科学上网到Youtube。
 1. 下载youtube字幕：
 pip install pytube
 cat >>download_srt.py <<EOF
@@ -11,7 +11,7 @@ yt = YouTube('https://www.youtube.com/watch?v=aNOZ7ocLD74')
 ###如果报错：“RegexMatchError: regex pattern (\W[\'"]?t[\'"]?: ?[\'"](.+?)[\'"]) had zero matches”
 ###解决办法：参考如下链接点赞数最高的评论，https://github.com/nficano/pytube/issues/381
 # 查看视频支持的字幕
-print(yt.captions.all()) ## 可看到繁体字的格式code="zh-TW"
+print(yt.captions.all()) ## 可看到繁体字的格式code="zh-TW"，简体字为code="zh-CN"
 ##生成字幕
 caption = yt.captions.get_by_language_code('zh-TW')
 ##转换字幕为srt格式
