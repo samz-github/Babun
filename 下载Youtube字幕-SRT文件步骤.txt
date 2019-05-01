@@ -1,0 +1,35 @@
+
+ 
+参考来源：https://python-pytube.readthedocs.io/en/latest/user/quickstart.html
+
+
+1. 下载youtube字幕：
+pip install pytube
+cat >>download_srt.py <<EOF
+from pytube import YouTube
+yt = YouTube('https://www.youtube.com/watch?v=aNOZ7ocLD74')
+###如果报错：“RegexMatchError: regex pattern (\W[\'"]?t[\'"]?: ?[\'"](.+?)[\'"]) had zero matches”
+###解决办法：参考如下链接点赞数最高的评论，https://github.com/nficano/pytube/issues/381
+# 查看视频支持的字幕
+print(yt.captions.all()) ## 可看到繁体字的格式code="zh-TW"
+##生成字幕
+caption = yt.captions.get_by_language_code('zh-TW')
+##转换字幕为srt格式
+print(caption.generate_srt_captions())
+EOF
+python download_srt.py
+
+2. 把生成的字幕保存到srt格式文件中，srt文件内容如下：
+1
+00:00:00,180 --> 00:00:02,960
+大多數的人會覺得聖經有許多
+
+2
+00:00:02,960 --> 00:00:05,860
+講述關於人類有多糟糕，不過那的確是真的
+
+....
+
+3. 下载movavi video converter软件并安装
+4. 通过movavi软件，把字幕srt文件添加到MP4视频文件中，最终合成带有字幕的视频。
+
