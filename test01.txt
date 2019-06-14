@@ -4,5 +4,3 @@ test01
 3
 4
 print 'hello'
-a = 5
-const a = new XMLHttpRequest()
