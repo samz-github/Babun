@@ -131,9 +131,9 @@ under the License.
     </server>
     -->
     <server>
-          <id>maven-xm-central</id>
+          <id>maven-my-central</id>
 	  <username>admin</username>
-	  <password>pass1234</password>
+	  <password>password</password>
     </server>
 
   </servers>
